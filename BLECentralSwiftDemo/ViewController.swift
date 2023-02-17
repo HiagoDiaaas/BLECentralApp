@@ -116,9 +116,16 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         if characteristic.uuid == CBUUID(string: CHARACTERISTIC_UUID) {
             if let value = characteristic.value, let string = String(data: value, encoding: .utf8) {
                 print("Received characteristic value: \(string)")
+                // Update the text field with the received value
+                DispatchQueue.main.async {
+                    self.textField.text = string
+                }
             }
         }
     }
+
+    
+    
 
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
         if let error = error {
